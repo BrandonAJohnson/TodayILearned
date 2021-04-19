@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load tz %}
+
+{% block head_title %}{{post.text}} by {{post.author.username}}{% endblock %}
+
+{% block body %}
+	<!-- https://tailwindcomponents.com/component/testimonial-card -->
+	<div class="max-w-full w-full mx-auto py-4 px-8 bg-white shadow-lg rounded-lg my-20">
+		<div class="flex justify-center md:justify-end -mt-16">
+			{% if post.author.profile.image != "1" %}
+				{% thumbnail post.author.profile.image "100x100" crop="center" as im %}
+					<img class="w-20 h-20 object-cover rounded-full border-2 border-blue-500" src="{{ im.url }}" alt="avatar">
+				{% endthumbnail %}
+			{% else %}
+				<img src="https://www.publicdomainpictures.net/pictures/40000/velka/question-mark.jpg" alt="" class="w-20 h-20 object-cover rounded-full border-2 border-blue-500">
+			{% endif %}
+		</div>
+		<div>
+			<h2 class="text-gray-800 text-3xl font-semibold">{{post.title}}</h2>
+			<h3 class="my-2 text-gray-800 text-3l font-semibold">{{post.text}}</h3>
+			<p class="mt-2 text-gray-600">{{post.details}}</p>
+		</div>
+		<div class="flex justify-end mt-4">
+			<a href="#" class="text-xl font-medium text-indigo-500">
+				{% if post.author.first_name or post.author.last_name %}
+					{{post.author.first_name}} {{post.author.last_name}}
+				{% else %}
+					{{post.author.username}}
+				{% endif %}
+			</a>
+		</div>
+	</div>
+
+{% endblock %}

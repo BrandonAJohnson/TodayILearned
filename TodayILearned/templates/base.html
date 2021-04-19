@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block head_title %}Default{% endblock %}</title>
-	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-	<!-- navigation from https://tailwindcomponents.com/component/jed-dylan-lee -->
-</head>
-<body>
-	<div class="min-h-screen flex flex-row flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
-		<div class="flex flex-col w-64 bg-gray-900 h-auto shadow-lg">
-			{% include "navigation.html" %}
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% block head_title %}Default{% endblock %}</title>
+		<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+		<!-- navigation from https://tailwindcomponents.com/component/jed-dylan-lee -->
+	</head>
+	<body>
+		<div class="min-h-screen flex flex-row flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
+			<div class="flex flex-col w-64 bg-gray-900 h-auto shadow-lg">
+				{% include "navigation.html" %}
+			</div>
+			<div class="container mx-auto w-full p-16">
+				{% block body %}
+					{% block content %}{% endblock %}
+				{% endblock %}
+			</div>
+			<div class="flex flex-col w-64 bg-gray-900 h-auto shadow-lg"></div>
 		</div>
-		<div class="w-auto p-16 ">
-			{% block body %}
-				{% block content %}{% endblock %}
-			{% endblock %}
-		</div>
-	</div>
-</body>
+	</body>
 </html>

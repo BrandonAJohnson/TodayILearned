@@ -1,27 +1,45 @@
 {% extends "base.html" %}
+{% load thumbnail %}
+{% load tz %}
 
 {% block head_title %}Today I Learned{% endblock %}
 
 {% block body %}
 	{% for post in posts %}
 		<!-- https://tailwindcomponents.com/component/post-artical -->
-		<div class="max-w-4xl px-10 w-96 my-4 py-6 bg-white rounded-lg shadow-md">
+		<div class="max-w-4xl px-10 w-1/2 mx-auto my-4 py-6 bg-white rounded-lg shadow-md">
 			<div class="flex justify-between items-center">
-				<span class="font-light text-gray-600">{{post.date|date:"F j, Y, g:i:a"}}</span>
-				<!-- <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="#">Tag</a> -->
+				<span class="font-light text-gray-600">{{post.date|localtime}}</span>
+				{% if post.tag %}
+					<a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="#">{{post.tag}}</a>
+				{% endif %}
 			</div>
 			<div class="mt-2">
-				<!-- <a class="text-2xl text-gray-700 font-bold hover:text-gray-600" href="#">Title</a> -->
+				{% if post.title %}
+					<span class="text-2xl text-gray-700 font-bold hover:text-gray-600">{{post.title}}</span>
+				{% endif %}
 				<p class="mt-2 text-gray-600">{{post.text}}</p>
 			</div>
 			<div class="flex justify-between items-center mt-4">
-				<!-- TODO: add a way to expand posts -->
-				<a class="text-blue-600 hover:underline" href="#">Read more</a>
+				<a class="text-blue-600 hover:underline" href="{% url 'feed:detail' post.id %}">Read More</a>
 				<div>
 					<a class="flex items-center" href="#">
-							<!-- TODO : user needs photo, name and link to bio -->
-							<!-- <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80" alt="avatar"> -->
-							<h1 class="text-gray-700 font-bold">User</h1>
+						{% if post.author.profile.image != "1" %}
+							{% thumbnail post.author.profile.image "100x100" crop="center" as im %}
+								<img class="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500" src="{{ im.url }}" alt="avatar">
+							{% endthumbnail %}
+						{% else %}
+							<img src="https://www.publicdomainpictures.net/pictures/40000/velka/question-mark.jpg" alt="" class="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500">
+						{% endif %}
+
+						<h1 class="text-gray-700 font-bold">
+							<!-- TODO: add settings to determine if users want to share their real names -->
+							{% if post.author.first_name or post.author.last_name %}
+								{{post.author.first_name}} {{post.author.last_name}}
+							{% else %}
+								{{post.author.username}}
+							{% endif %}
+						</h1>
 					</a>
 				</div>
 			</div>
