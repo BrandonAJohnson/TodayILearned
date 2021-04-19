@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head_title %}Today I Learned{% endblock %}
+
+{% block body %}
+	{% for post in posts %}
+		<!-- https://tailwindcomponents.com/component/post-artical -->
+		<div class="max-w-4xl px-10 w-96 my-4 py-6 bg-white rounded-lg shadow-md">
+			<div class="flex justify-between items-center">
+				<span class="font-light text-gray-600">{{post.date|date:"F j, Y, g:i:a"}}</span>
+				<!-- <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="#">Tag</a> -->
+			</div>
+			<div class="mt-2">
+				<!-- <a class="text-2xl text-gray-700 font-bold hover:text-gray-600" href="#">Title</a> -->
+				<p class="mt-2 text-gray-600">{{post.text}}</p>
+			</div>
+			<div class="flex justify-between items-center mt-4">
+				<!-- TODO: add a way to expand posts -->
+				<a class="text-blue-600 hover:underline" href="#">Read more</a>
+				<div>
+					<a class="flex items-center" href="#">
+							<!-- TODO : user needs photo, name and link to bio -->
+							<!-- <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80" alt="avatar"> -->
+							<h1 class="text-gray-700 font-bold">User</h1>
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
