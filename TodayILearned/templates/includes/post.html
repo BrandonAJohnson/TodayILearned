@@ -1,0 +1,39 @@
+{% load thumbnail %}
+{% load tz %}
+
+<!-- https://tailwindcomponents.com/component/post-artical -->
+<div class="max-w-4xl px-10 w-1/2 mx-auto my-4 py-6 bg-white rounded-lg shadow-md">
+	<div class="flex justify-between items-center">
+
+		<div class="mb-3">
+			<a class="flex items-center" href="{% url 'profiles:detail' post.author.username %}">
+				{% if post.author.profile.image != "1" %}
+					{% thumbnail post.author.profile.image "100x100" crop="center" as im %}
+						<img class="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500" src="{{ im.url }}" alt="avatar">
+					{% endthumbnail %}
+				{% else %}
+					<img src="https://www.publicdomainpictures.net/pictures/40000/velka/question-mark.jpg" alt="" class="rounded-full h-10 w-10 flex items-center justify-center mr-3 border-2 border-blue-500">
+				{% endif %}
+
+				<h1 class="text-gray-700 font-bold">
+					<!-- TODO: add settings to determine if users want to share their real names -->
+					{% if post.author.first_name or post.author.last_name %}
+						{{post.author.first_name}} {{post.author.last_name}}
+					{% else %}
+						{{post.author.username}}
+					{% endif %}
+				</h1>
+			</a>
+		</div>
+		{% if post.tag %}
+			<a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-blue-500" href="#">{{post.tag}}</a>
+		{% endif %}
+	</div>
+	<div class="mt-2">
+		<p class="mt-2 text-gray-600">{{post.text}}</p>
+	</div>
+	<div class="flex justify-between items-center mt-4">
+		<a class="text-blue-600 hover:underline" href="{% url 'feed:detail' post.id %}">Read More</a>
+		<span class="font-light text-gray-600">{{post.date|localtime}}</span>
+	</div>
+</div>

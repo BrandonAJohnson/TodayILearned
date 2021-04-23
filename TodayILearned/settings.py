@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'feed',
     'profiles',
+    'followers',
 
     'sorl.thumbnail',
 
@@ -134,7 +135,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # django-allauth https://django-allauth.readthedocs.io/
 
-STATIC_URL = '/static/'
 SITE_ID = 1
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -159,3 +159,11 @@ AUTHENTICATION_BACKENDS = (
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, "frontend"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATIC_URL = '/static/'
+
